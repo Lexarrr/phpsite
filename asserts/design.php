@@ -1,4 +1,4 @@
-<?php include("asserts/vars.inc"); ?>
+<!-- < include("asserts/vars.inc"); ?> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,11 +14,8 @@
 
 <div class="container">
     <?= $content; ?>
-
-
-
-
 </div>
+
 <footer class="d-flex bg-warning bg-opacity-25 justify-content-center aling-item-center py-3 my-4 border-top">
     <p class="mb-0 text-muted">&copy; 2023 company, inc.</p>
 
