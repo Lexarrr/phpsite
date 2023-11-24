@@ -3,7 +3,8 @@ include("asserts/functions.php");
 $title = "Site on PHP";
 $m = get_menu($menu);
 $content = get_content("asserts/main.inc");
+$content .= cookies_test("visits");
+$content .= session_test("VISITS");
 include("asserts/design.php");
-
 
 ?>

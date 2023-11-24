@@ -17,7 +17,7 @@
     />
     <div id="textHelp" class="form-text">Input your exist name</div>
   </div>
-  <div class="mb-2">
+  <div class="mb-3">
     <label for="email" class="form-label">Your E-mail: </label>
     <input
       type="email"
@@ -28,11 +28,18 @@
     />
     <div id="emailHelp" class="form-text">We dont sent your e-mail anyone</div>
   </div>
+  
   <div class="mb-3">
     <label for="textMess" class="form-label">Your message: </label>
     <textarea type="textMess" id="textMess" name="textMess" class="form-control" aria-describedby="messHelp">
     </textarea>
     <div id="messHelp" class="form-text">Input your opinion</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="fileUpload" class="form-label">load files: </label>
+    <input  name="fileUpload" class="form-control" type="file" id="fileUpload">
+    <div id="fileUpload" class="form-text">Load your file</div>
   </div>
   <input type="submit" name="sent" class="btn btn-primary" value="Отправить" />
 </form>

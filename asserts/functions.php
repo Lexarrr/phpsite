@@ -59,11 +59,11 @@ function get_content(string $content_file): string
 
 function fbForm(): string
 {
+  $uploadPath = $_SERVER["DOCUMENT_ROOT"] . "/UPLOAD/";
   $fields = [
     "username" => "<b>Name: <b/>",
     "email" => "<b>E-mail: <b/>",
     "textMess" => "<b>Message: <b/>",
-
   ];
   $res = "";
   if ($_POST["sent"]) {
@@ -73,6 +73,42 @@ function fbForm(): string
       }
     }
   }
+  if ($_FILES["fileUpload"]["name"]) {
+    $uploadFile = $uploadPath . $_FILES["fileUpload"]["name"];
+    if (!move_uploaded_file($_FILES["fileUpload"]["tmp_name"], $uploadFile)) {
+      $res .= "not sucsses upload file";
+    }
+  } else {
+    $res .= "file is not load";
+  }
   return $res;
 }
+/**
+ * @return string with count visits 
+ */
+function cookies_test(string $cookie_name): string{
+
+  session_start(); //обязательно
+  $visit_count = 1;
+  if (isset($_COOKIE[$cookie_name])){
+    $visit_count += $_COOKIE[$cookie_name];
+  }
+  setcookie($cookie_name, $visit_count, strtotime("+ 1 minute"),"/");
+
+  return "<p>you to vote: " . $visit_count . "</p>";
+
+}
+
+function session_test(string $session_name): string{
+  $visit_count = 1;
+  if (isset($_SESSION[$session_name])){
+    $visit_count = $_SESSION[$session_name] + 1;
+  }
+
+  $_SESSION[$session_name] = $visit_count;
+  return "<p>you to vote (session): " . $visit_count . "</p>";
+
+}
+
+
 ?>
