@@ -55,4 +55,24 @@ function get_content(string $content_file): string
 {
   return file_get_contents($content_file);
 }
+
+
+function fbForm(): string
+{
+  $fields = [
+    "username" => "<b>Name: <b/>",
+    "email" => "<b>E-mail: <b/>",
+    "textMess" => "<b>Message: <b/>",
+
+  ];
+  $res = "";
+  if ($_POST["sent"]) {
+    foreach ($_POST as $k => $v) {
+      if ($v && $v != "Отправить") {
+        $res .= $fields[$k] . htmlspecialchars($v) . "<br/>\n";
+      }
+    }
+  }
+  return $res;
+}
 ?>

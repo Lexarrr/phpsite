@@ -1,9 +1,7 @@
 <?php 
 include("asserts/functions.php"); 
-$title = "Site on PHP";
+$title = "Обратная связь";
 $m = get_menu($menu);
-$content = get_content("asserts/contacts.inc");
+$content = fbForm();
 include("asserts/design.php");
-
-
 ?>
