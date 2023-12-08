@@ -1,0 +1,14 @@
+<?php
+include("asserts/functions.php");
+$title = "Escape from accaunt";
+$m = get_menu($menu);
+if (isset($_SESSION["USER"])) {
+    $content = "<h2>" . $_SESSION["USER"]["NAME"] . ", YOU ARE LOG OUT</h2>";
+    $_SESSION["USER"] = array();
+    unset($_SESSION["USER"]);
+    session_destroy();
+    $page = "refresh: 1, url=" . $_SERVER["HTTP_REFERER"];
+    header($page);
+}
+include("asserts/design.php");
+?>

@@ -1,21 +1,9 @@
 <?php
 include("vars.inc");
 /**
- * @var $a int - first
- * @var $b int - second
- * @return int - summ 2 
- */
-function summ($a, $b): int
-{
-  global $y;
-  return ($a + $b);
-}
-
-/**
  * @var $menu array - assoc arr w links
  * @return string
  */
-
 function get_menu(array $menu): string
 {
 
@@ -28,24 +16,53 @@ function get_menu(array $menu): string
         <span class=\"navbar-toggler-icon\"></span>
       </button>
       <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
-        <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">";
+        <ul class=\"navbar-nav me-2 ms-auto mb-2 mb-lg-0\">";
   foreach ($menu as $k => $l) {
     if ($l == $page) {
       $res .= "<li class=\"nav-item\">
-            <a class=\"nav-link active\" aria-current=\"page\" href=\"$l\">$k</a>
+            <a class=\"nav-link text-danger bg-warning bg-opacity-25\" href=\"$l\">$k</a>
           </li>";
     } else {
       $res .= "<li class=\"nav-item\">
-                <a class=\"nav-link\" aria-current=\"page\" href=\"$l\">$k</a>
-              </li>";
+      <a class=\"nav-link\" href=\"$l\">$k</a>
+      </li>";
     }
   }
-  $res .= "</ul>
+  if (isset($_SESSION["USER"]) && $_SESSION["USER"]["LOGGED"]) {
+    $res .= "<li class=\"nav-item dropdown\">
+    <a class=\"nav-link dropdown-toggle\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
+      " . $_SESSION["USER"]["NAME"] . "
+    </a>
+    <ul class=\"dropdown-menu\">
+      <li><a class=\"dropdown-item\" href=\"#\">Личный кабинет</a></li>
+      <li><hr class=\"dropdown-divider\"></li>
+      <li><a class=\"dropdown-item\" href=\"logout.html\">Выход</a></li>
+    </ul>
+  </li>";
+} else {
+    $res .= "<li class=\"nav-item\">
+        <a class=\"nav-link\" href=\"loginform.html\">Войти</a>
+    </li>
+    <li class=\"nav-item\">
+        <a class=\"nav-link\" href=\"register.html\">Регистрация</a>
+    </li>";
+}
+  $res .= "<a href=\"basket.php\" type=\"button\" class=\"btn btn-outline-secondary btn-sm position-relative\">Корзина
+  <span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">";
+  if (isset($_SESSION["BASKET"]))
+    $res .= count($_SESSION["BASKET"]);
+  $res .= "</span>
+</a>
+  </ul>
+      </div>
   </div>
-</div>
 </nav>";
+
   return $res;
 }
+
+
+
 /**
  * возвращ текстовый фрагмент из файла
  * @var $content_file str - path to file
@@ -86,29 +103,34 @@ function fbForm(): string
 /**
  * @return string with count visits 
  */
-function cookies_test(string $cookie_name): string{
+function cookies_test(string $cookie_name): string
+{
 
-  session_start(); //обязательно
+  //session_start(); //обязательно
   $visit_count = 1;
-  if (isset($_COOKIE[$cookie_name])){
+  if (isset($_COOKIE[$cookie_name])) {
     $visit_count += $_COOKIE[$cookie_name];
   }
-  setcookie($cookie_name, $visit_count, strtotime("+ 1 minute"),"/");
+  setcookie($cookie_name, $visit_count, strtotime("+ 1 minute"), "/");
 
   return "<p>you to vote: " . $visit_count . "</p>";
-
 }
 
-function session_test(string $session_name): string{
+function session_test(string $session_name): string
+{
   $visit_count = 1;
-  if (isset($_SESSION[$session_name])){
+  if (isset($_SESSION[$session_name])) {
     $visit_count = $_SESSION[$session_name] + 1;
   }
 
   $_SESSION[$session_name] = $visit_count;
   return "<p>you to vote (session): " . $visit_count . "</p>";
-
 }
 
-
-?>
+function send_mail($to, $from, $subject, $message, $headers){
+  $headers = "Content-type: text/html; charset=utf-8\n";
+  $headers .= "From: от кого письмо <{$from}>\r\n";
+  $headers .= "Reply-to: {$from}\r\n";
+  $res = mail($to, $subject, $message, $headers);
+  return $res;
+}

@@ -1,8 +1,43 @@
 <?php 
 include("asserts/functions.php"); 
 $title = "Site on PHP";
+$arPict = scandir("./carousel");
 $m = get_menu($menu);
 $content = get_content("asserts/main.inc");
+$content .= "<div id=\"carouselExampleInterval\" class=\"carousel slide\" data-bs-ride=\"carousel\">
+    <div class=\"carousel-inner\">";
+$first = true;
+foreach($arPict as $pict) {
+    if($pict == "." || $pict == "..")
+        continue;
+    if($first) {
+        $content .= "<div class=\"carousel-item active\" data-bs-interval=\"2000\">
+        <img src=\"carousel/{$pict}\" class=\"d-block\" alt=\"{$pict}\">
+      </div>";
+      $first = false;
+    } else {
+        $content .= "<div class=\"carousel-item\" data-bs-interval=\"2000\">
+        <img src=\"carousel/{$pict}\" class=\"d-block\" alt=\"{$pict}\">
+      </div>";
+    }
+}
+$content .= "     
+    </div>
+    <button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carouselExampleInterval\" data-bs-slide=\"prev\">
+      <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>
+      <span class=\"visually-hidden\">Предыдущий</span>
+    </button>
+    <button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#carouselExampleInterval\" data-bs-slide=\"next\">
+      <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>
+      <span class=\"visually-hidden\">Следующий</span>
+    </button>
+  </div>";
+if(isset($_SESSION["USER"]) && $_SESSION["USER"]["LOGGED"]){
+    $content .= "YOU CN SEE IT IF YOU LOG IN";
+}
+if(isset($_SESSION["USER"]) && $_SESSION["USER"]["LEVEL"] == 2){
+    $content .= "<br> you can see it if you are admin";
+}
 $content .= cookies_test("visits");
 $content .= session_test("VISITS");
 include("asserts/design.php");
