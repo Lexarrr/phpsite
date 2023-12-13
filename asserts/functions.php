@@ -6,60 +6,61 @@ include("vars.inc");
  */
 function get_menu(array $menu): string
 {
-
-  $page = basename($_SERVER["PHP_SELF"]);
-  $res = "<nav class=\"navbar navbar-expand-lg bg-body-tertiary\">
+    $page = basename($_SERVER["PHP_SELF"]);
+    $result = "<nav class=\"navbar navbar-expand-lg bg-body-tertiary\">
     <div class=\"container-fluid\">
-      <a class=\"navbar-brand\" href=\"#index.html\">Site</a>
-      <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarSupportedContent\"
-       aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
-        <span class=\"navbar-toggler-icon\"></span>
-      </button>
-      <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
-        <ul class=\"navbar-nav me-2 ms-auto mb-2 mb-lg-0\">";
-  foreach ($menu as $k => $l) {
-    if ($l == $page) {
-      $res .= "<li class=\"nav-item\">
-            <a class=\"nav-link text-danger bg-warning bg-opacity-25\" href=\"$l\">$k</a>
-          </li>";
-    } else {
-      $res .= "<li class=\"nav-item\">
-      <a class=\"nav-link\" href=\"$l\">$k</a>
-      </li>";
+        <a class=\"navbar-brand\" href=\"index.html\">Наш сайт</a>
+        <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\"
+            data-bs-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\"
+            aria-label=\"Переключатель навигации\">
+            <span class=\"navbar-toggler-icon\"></span>
+        </button>
+        <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">
+            <ul class=\"navbar-nav me-2 ms-auto mb-2 mb-lg-0\">";
+    foreach ($menu as $item => $link) {
+        if ($link == $page) {
+            $result .= "<li class=\"nav-item\">
+            <a class=\"nav-link text-danger bg-warning bg-opacity-25\" href=\"$link\">$item</a>
+        </li>";
+        } else {
+            $result .= "<li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"$link\">$item</a>
+        </li>";
+        }
     }
-  }
-  if (isset($_SESSION["USER"]) && $_SESSION["USER"]["LOGGED"]) {
-    $res .= "<li class=\"nav-item dropdown\">
-    <a class=\"nav-link dropdown-toggle\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
-      " . $_SESSION["USER"]["NAME"] . "
-    </a>
-    <ul class=\"dropdown-menu\">
-      <li><a class=\"dropdown-item\" href=\"#\">Личный кабинет</a></li>
-      <li><hr class=\"dropdown-divider\"></li>
-      <li><a class=\"dropdown-item\" href=\"logout.html\">Выход</a></li>
+    if (isset($_SESSION["USER"]) && $_SESSION["USER"]["LOGGED"]) {
+        $result .= "<li class=\"nav-item dropdown\">
+        <a class=\"nav-link dropdown-toggle\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
+          " . $_SESSION["USER"]["NAME"] . "
+        </a>
+        <ul class=\"dropdown-menu\">
+          <li><a class=\"dropdown-item\" href=\"#\">Личный кабинет</a></li>
+          <li><hr class=\"dropdown-divider\"></li>
+          <li><a class=\"dropdown-item\" href=\"logout.html\">Выход</a></li>
+        </ul>
+      </li>";
+    } else {
+        $result .= "<li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"loginform.html\">Войти</a>
+        </li>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"register.html\">Регистрация</a>
+        </li>";
+    }
+    $result .= "<a href=\"basket.php\" type=\"button\" class=\"btn btn-outline-secondary btn-sm position-relative\">Корзина
+    <span id = \"basketBadge\" class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success\">";
+    if(isset($_SESSION["BASKET"]))
+        $result .= count($_SESSION["BASKET"]);
+    $result .= "</span>
+  </a>
     </ul>
-  </li>";
-} else {
-    $res .= "<li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"loginform.html\">Войти</a>
-    </li>
-    <li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"register.html\">Регистрация</a>
-    </li>";
-}
-  $res .= "<a href=\"basket.php\" type=\"button\" class=\"btn btn-outline-secondary btn-sm position-relative\">Корзина
-  <span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">";
-  if (isset($_SESSION["BASKET"]))
-    $res .= count($_SESSION["BASKET"]);
-  $res .= "</span>
-</a>
-  </ul>
-      </div>
-  </div>
+        </div>
+    </div>
 </nav>";
 
-  return $res;
+    return $result;
 }
+
 
 
 

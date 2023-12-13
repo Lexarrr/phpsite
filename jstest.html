@@ -1,0 +1,16 @@
+<?php 
+include("asserts/functions.php"); 
+$title = "Testing JS";
+$m = get_menu($menu);
+$content = "<h1>Testing client's scripts</h1>";
+$content .= "<button id=\"getPopup\">buy</button>";
+$content .= "<div id=\"basket\"></div>";
+$content .= "
+    <div id=\"popup\" class = \"popup\">
+        <div class = \"popup-content\">
+            <button class = \"close\"></button>
+            <p>Product to add in basket </p>
+        </div>
+    </div>";
+include("asserts/design.php");
+?>

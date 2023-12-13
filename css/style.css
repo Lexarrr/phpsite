@@ -1,3 +1,52 @@
 h2{
     color: red;
 }
+
+.popup{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.popup-content{
+
+    left: 50%;
+    top: 50%;
+    /* margin: 0; */
+    transform: translate(-50%, -50%);
+    position: fixed;
+    z-index: 12;
+    padding: 20px;
+    border: 1px solid #383838;
+    border-radius: 15px;
+    background-color: aliceblue;
+
+}
+
+.close{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 15px;
+    border: 2px solid ccd;
+    background-color: red;
+    text-decoration: none;
+    padding: 0;
+    text-align: center;
+    font-size: 18px;
+    font-family: sans-serif;
+    /* font-weight: ; */
+
+}
+
+.close::before{
+    content: "X";
+}

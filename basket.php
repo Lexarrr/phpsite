@@ -20,6 +20,8 @@ if (isset($_SESSION["BASKET"])) {
                         <th scope=\"col\">&nbsp;</th>
                         <th scope=\"col\">Всего, руб.</th>
                         <th scope=\"col\">&nbsp;</th>
+                        <th scope=\"col\">&nbsp;</th>
+                        
                     </tr>
                 </thead>
                 <tr>";
@@ -39,6 +41,8 @@ if (isset($_SESSION["BASKET"])) {
             } else {
                 $content .= "<td>{$value}</td>";
             }
+
+            //if key == kolvo...
         }
         if ($count == 1) {
             $content .= "<td><a href=\"buy.php?product={$product["ID"]}\" class=\"decoration-none\">&#9650;</a>";
@@ -53,7 +57,7 @@ if (isset($_SESSION["BASKET"])) {
         $total += $product["PRICE"] * $product["COUNT"];
     }
     $content .= "<tr>";
-    $content .= "<td colspan=\"6\" class=\"text-end\"><b>ИТОГО:</b></td>";
+    $content .= "<td colspan=\"7\" class=\"text-end\"><b>ИТОГО:</b></td>";
     $content .= "<td><b>{$total}</b></td>";
     $content .= "<td>&nbsp;<td/>";
     $content .= "</tr>";
@@ -61,28 +65,10 @@ if (isset($_SESSION["BASKET"])) {
 
     if (isset($_SESSION["USER"]) && $_SESSION["USER"]["LOGGED"]) {
 
-        $content .= "<h2>Оформление заказа</h2>
-            <br />
-            <form method=\"post\" enctype=\"multipart/form-data\">
-            <div class=\"mb-3\">
-                <label for=\"userName\" class=\"form-label\">Your name: </label>
-                <input type=\"text\" id=\"userName\" name=\"userName\" class=\"form-control\" aria-describedby=\"textHelp\" />
-                <div id=\"textHelp\" class=\"form-text\">Input your real name</div>
-            </div>
-            
-            <div class=\"mb-3\">
-                <label for=\"userEmail\" class=\"form-label\">Your E-mail: </label>
-                <input type=\"Email\" id=\"userEmail\" name=\"userEmail\" class=\"form-control\" aria-describedby=\"emailHelp\" />
-                <div id=\"emailHelp\" class=\"form-text\">We dont sent your e-mail anyone</div>
-            </div>
-            
-            <div class=\"mb-3\">
-                <label for=\"userName\" class=\"form-label\">Your address: </label>
-                <input type=\"text\" id=\"userAddress\" name=\"userAddress\" class=\"form-control\" aria-describedby=\"textHelp\" />
-                <div id=\"textHelp\" class=\"form-text\">Input your real name</div>
-            </div>";
-        $content .= "К оплате: <b>{$total}</b><br/> <br/>";
-        $content .= "<a name=\"sent\" href=\"arrange.php\" class=\"btn btn-primary\">Оформить заказ</a><form/>";
+        $content .= "<a href=\"arrange.php\" name=\"sent\" class=\"btn btn-primary\">Оформить заказ<a/>";
+
+  
+
     } else {
         if (isset($_COOKIE["utm"])) {
             $cookieData = $_COOKIE["utm"];
